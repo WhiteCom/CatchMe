@@ -35,9 +35,10 @@ public class Character : MonoBehaviour
                                          0,
                                          Input.GetAxisRaw("Vertical")).normalized;
         }
-        float inputMagnitude = inputDirection.magnitude;
+        float inputMagnitude = inputDirection.magnitude; // 방향벡터 정규화 
         smoothInputMagnitude = Mathf.SmoothDamp(smoothInputMagnitude, inputMagnitude, ref smoothMoveVelocity, smoothMoveTime);
 
+        // 입력 방향에 맞게 회전할 각도 구하기
         float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg;
         angle = Mathf.LerpAngle(angle, targetAngle, Time.deltaTime * turnSpeed * inputMagnitude); // 캐릭터가 회전 후 바라보는 방향이 0도가 되는 문제 해결
         transform.eulerAngles = Vector3.up * angle;
@@ -45,7 +46,7 @@ public class Character : MonoBehaviour
         velocity = transform.forward * moveSpeed * smoothInputMagnitude;
     }
 
-    // Rigidbody 관련 충돌처리는 FixedUpdate 를 이용하는게 효육적이다. 
+    // Rigidbody 관련 충돌처리는 FixedUpdate 를 이용하는게 효율적이다. 
     private void FixedUpdate()
     {
         // MoveRotation : 오일러 각도는 짐벌락 문제가 있어서 잘 쓰기위해 쿼터니언 체계로 변경한다.

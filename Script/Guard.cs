@@ -70,6 +70,7 @@ public class Guard : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        // 경로 표기하기 
         Vector3 startPosition = pathHolder.GetChild(0).position;
         Vector3 previousPosition = startPosition;
 
@@ -90,8 +91,10 @@ public class Guard : MonoBehaviour
     // 시야 내 캐릭터가 있는지 체크. true : 발견 / false : 미발견
     bool CanSeePlayer()
     {
+        // 거리 체크
         if(Vector3.Distance(transform.position, player.position) < viewDistance)
         {
+            // 캐릭터에 대한 방향벡터 구하기
             Vector3 dirToPlayer = (player.position - transform.position).normalized;
             float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
             if(angleBetweenGuardAndPlayer < viewAngle / 2.0f)
